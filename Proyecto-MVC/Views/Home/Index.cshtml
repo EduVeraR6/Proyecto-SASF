@@ -1,0 +1,42 @@
+﻿@model Proyecto_MVC.Models.UserInfo
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container col-6"></div>
+<div style="padding:50px;">
+    <h1 class="text-center text-primary" >LOGIN</h1>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <div>
+                @using (Html.BeginForm("LoginUser", "Home", FormMethod.Post, new { role = "form" }))
+                {
+                    <div>
+                        @Html.AntiForgeryToken()
+                        <div>
+                            <label>User</label>
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(m => m.Username , new{@class="form-control txtbox"})
+                        </div>
+                        <div style="padding-top:20px;"></div>
+                        <div>
+                            <label>Password</label>
+                        </div>
+                        <div>
+                            @Html.PasswordFor(m => m.Password, new{@class="form-control txtbox"})
+                        </div>
+                    </div>
+                    <div style="padding-left:35%;width:40%;">
+                        <div style="padding-top:20px;">
+                            <input class="btn btn-primary btn-lg rph-login-button" type="submit" value="login" />
+                        </div>
+                        <label class="text-Danger">@ViewBag.Message</label>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

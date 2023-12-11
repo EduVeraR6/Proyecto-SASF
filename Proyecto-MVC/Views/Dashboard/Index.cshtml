@@ -1,0 +1,155 @@
+﻿@model Proyecto_MVC.Models.DAO.AnimalDAO
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/Animales.js"></script>
+
+<div class="container text-center d-flex justify-content-between">
+    <div class="col-2">
+        <div class="row">
+            <a asp-action="Index" asp-controller="Raza" class="btn btn-outline-success">Razas</a>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="row">
+            <a asp-action="Logoff" asp-controller="Home" class="btn btn-danger">Cerrar Sesion</a>
+        </div>
+    </div>
+</div>
+
+<h1>Lista Animales</h1>
+
+<p>
+    <button onclick="LimpiarCampos()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#animalModal">
+        Crear Animal
+    </button>
+</p>
+
+<div class="modal fade" id="animalModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="title" class="modal-title">Registrar Animal</h5>
+            </div>
+            <div class="modal-body">
+                <form id="animalForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" id="Id" class="form-control" asp-for="Id" />
+                    <input type="hidden" id="UsuarioIngreso" class="form-control" asp-for="UsuarioIngreso" val="1" />
+                    <input type="hidden" id="UsuarioModificacion" class="form-control" asp-for="UsuarioModificacion" val="1" />
+
+                    <label asp-for="Nombre">Nombre del Animal :</label>
+                    <input type="text" id="Nombre" asp-for="Nombre" name="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger span"></span>
+
+                    <label asp-for="Especie">Especie</label>
+                    <input type="text" id="Especie" asp-for="Especie" name="Especie" class="form-control" />
+                    <span asp-validation-for="Especie" class="text-danger span"></span>
+
+                    <label asp-for="Edad">Edad</label>
+                    <input type="number" id="Edad" asp-for="Edad" name="Edad" class="form-control" />
+                    <span asp-validation-for="Edad" class="text-danger span"></span>
+
+                    <label asp-for="ObservacionEstado">Observacion :</label>
+                    <input type="text" id="ObservacionEstado" asp-for="ObservacionEstado" name="ObservacionEstado" class="form-control" />
+                    <span asp-validation-for="ObservacionEstado" class="text-danger"></span>
+
+                    <label asp-for="Id_Raza"><strong>Selecciona una Raza:</strong></label>
+                    <hr />
+                    <div>
+                        <select class="form-select" aria-label="Default select example" id="Id_Raza" asp-for="Id_Raza" name="Id_Raza">
+                            @foreach (var raza in ViewBag.Razas)
+                            {
+                                <option value="@raza.Id">
+                                    @raza.Nombre
+                                </option>
+                            }
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" id="btnRegistrar" class="btn btn-primary mr-3">Guardar</button>
+                    <button type="button" id="btnModificar" class="btn btn-primary mr-3" style="display:none">Guardar Cambios</button>
+                    <button type="button" id="btnEliminar" class="btn btn-primary mr-3" style="display:none">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container container-sm container-md">
+
+    <table class="table  table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Edad
+                </th>
+                <th>
+                    Especie
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Raza
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Animales)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Edad
+                    </td>
+                    <td>
+                        @item.Especie
+                    </td>
+                    <td>
+                        @item.Estado
+                    </td>
+                    <td>
+                        @item.Raza.Nombre
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" onclick="Edit(@item.Id)" id="btnEditar">
+                            Editar 
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="Eliminar(@item.Id)" id="btnEliminar">
+                            Eliminar 
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+

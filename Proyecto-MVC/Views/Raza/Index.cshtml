@@ -1,0 +1,137 @@
+﻿@model Proyecto_MVC.Models.DAO.RazaDAO
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/Razas.js"></script>
+
+<div class="container text-center d-flex justify-content-between">
+    <div class="col-2">
+        <div class="row">
+            <a asp-action="Index" asp-controller="Dashboard" class="btn btn-outline-success">Animales</a>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="row">
+            <a asp-action="Logoff" asp-controller="Home" class="btn btn-danger">Cerrar Sesion</a>
+        </div>
+    </div>
+</div>
+
+<h1>Lista Razas</h1>
+
+<p>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#razaModal">
+        Crear Raza
+    </button>
+</p>
+
+<div class="modal fade" id="razaModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="title" class="modal-title">Registrar Raza</h5>
+            </div>
+            <div class="modal-body">
+                <form id="razaForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" id="Id" class="form-control" asp-for="Id" />
+                    <input type="hidden" id="UsuarioIngreso" class="form-control" asp-for="UsuarioIngreso" val="1" />
+                    <input type="hidden" id="UsuarioModificacion" class="form-control" asp-for="UsuarioModificacion" val="1" />
+
+                    <label asp-for="Nombre">Nombre de la Raza :</label>
+                    <input type="text" id="Nombre" asp-for="Nombre" name="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger span"></span>
+
+                    <label asp-for="OrigenGeografico">Origen Geografico:</label>
+                    <input type="text" id="OrigenGeografico" asp-for="OrigenGeografico" name="OrigenGeografico" class="form-control" />
+                    <span asp-validation-for="OrigenGeografico" class="text-danger span"></span>
+
+                    <label asp-for="Descripcion">Descripcion</label>
+                    <textarea resize="none" id="Descripcion" asp-for="Descripcion" name="Descripcion" class="form-control"></textarea>
+                    <span asp-validation-for="Descripcion" class="text-danger span"></span>
+
+                    <label asp-for="ObservacionEstado">Observacion :</label>
+                    <input type="text" id="ObservacionEstado" asp-for="ObservacionEstado" name="ObservacionEstado" class="form-control" />
+                    <span asp-validation-for="ObservacionEstado" class="text-danger"></span>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" id="btnRegistrar" class="btn btn-primary mr-3">Guardar</button>
+                    <button type="button" id="btnModificar" class="btn btn-primary mr-3" style="display:none">Guardar Cambios</button>
+                    <button type="button" id="btnEliminar" class="btn btn-primary mr-3" style="display:none">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container container-sm container-md">
+
+    <table class="table  table-striped">
+        <thead class="col-6">
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th class="text-center">
+                    Descripcion
+                </th>
+                <th>
+                    Origen Geografico
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Razas)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                            @item.Descripcion
+                        </span>
+
+                    </td>
+                    <td>
+                        @item.OrigenGeografico
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary " onclick="Edit(@item.Id)" id="btnEditar">
+                            Editar
+                        </button>
+                        <button type="button" class="btn btn-danger " onclick="Eliminar(@item.Id)" id="btnEliminar">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+
+
+
+
+
+
