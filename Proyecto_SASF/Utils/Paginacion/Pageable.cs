@@ -1,8 +1,8 @@
-﻿using AGE.Middleware.Exceptions.BadRequest;
+﻿using Proyecto_SASF.Middleware.Exceptions.BadRequest;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace AGE.Utils.Paginacion
+namespace Proyecto_SASF.Utils.Paginacion
 {
     public class Pageable
     {

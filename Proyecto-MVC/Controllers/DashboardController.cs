@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Proyecto_MVC.Models;
 using Proyecto_MVC.Models.DAO;
+using Proyecto_MVC.Utils;
+using Proyecto_MVC.Utils.Paginacion;
 using System.Net.Http.Headers;
 using System.Text;
 using Zoo_MVC.Models;
@@ -33,48 +35,52 @@ namespace Proyecto_MVC.Controllers
         }
 
         [HttpGet]
-        private async Task<List<RazaViewModel>> ObtenerRazas()
+        public async Task<int> ObtenerTotalAnimales()
         {
-            List<RazaViewModel> razas = new List<RazaViewModel>();
-            var token = ObtenerToken();
+            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Animales");
+            Page<AnimalViewModel> animals = await Auxiliar.ExtraerPage<AnimalViewModel>(response);
 
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Raza");
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = await response.Content.ReadAsStringAsync();
-                var responseObject = JsonConvert.DeserializeObject<JObject>(data);
-                var contentArray = responseObject["content"].ToString();
-                razas = JsonConvert.DeserializeObject<List<RazaViewModel>>(contentArray);
-            }
-
-            return razas;
+            return animals.TotalElements;
         }
 
 
+
         [HttpGet]
+        private async Task<List<RazaViewModel>> ObtenerRazas()
+        {
+            //List<RazaViewModel> razas = new List<RazaViewModel>();
+            //var token = ObtenerToken();
+
+            //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Raza");
+
+            Page<RazaViewModel> razas = await Auxiliar.ExtraerPage<RazaViewModel>(response);
+
+
+
+            return razas.Content;
+        }
+
+        [HttpGet]
+        public async Task<List<AnimalViewModel>> ObtenerAnimales(int page = 0, int pageSize = 10) {
+
+            //var token = ObtenerToken();
+
+            //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await _client.GetAsync($"{baseUrl}Animales?page={page}&size={pageSize}");
+            Page<AnimalViewModel> animals = await Auxiliar.ExtraerPage<AnimalViewModel>(response);
+
+
+            return animals.Content;
+        }
+
         public async Task<IActionResult> Index()
         {
-            List<AnimalViewModel> animales = new List<AnimalViewModel>();
-
-            var token = ObtenerToken();
-           
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-            HttpResponseMessage response = await _client.GetAsync(baseUrl+"Animales");
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = await response.Content.ReadAsStringAsync();
-                var responseObject = JsonConvert.DeserializeObject<JObject>(data);
-                var contentArray = responseObject["content"].ToString();
-                animales = JsonConvert.DeserializeObject<List<AnimalViewModel>>(contentArray);
-            }
 
             List<RazaViewModel> razas = await ObtenerRazas();
-
+            List<AnimalViewModel> animales = await ObtenerAnimales();
             ViewBag.Razas = razas;
             ViewBag.Animales = animales;
 
@@ -87,9 +93,9 @@ namespace Proyecto_MVC.Controllers
         {
             try
             {
-                var token = ObtenerToken();
+                //var token = ObtenerToken();
 
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 string data = JsonConvert.SerializeObject(animal);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
@@ -111,11 +117,11 @@ namespace Proyecto_MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> ObtenerAnimal(int id)
+        public async Task<AnimalViewModel> ObtenerAnimal(int id)
         {
-            var token = ObtenerToken();
+            //var token = ObtenerToken();
 
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             AnimalViewModel animal = new AnimalViewModel();
 
@@ -126,9 +132,9 @@ namespace Proyecto_MVC.Controllers
 
                 string data = await response.Content.ReadAsStringAsync();
                 animal = JsonConvert.DeserializeObject<AnimalViewModel>(data);
-                return Json(animal);
+                return animal;
             }
-            return Json("No se encontro el animal");
+            return animal;
         }
 
         [HttpPost]
@@ -136,9 +142,9 @@ namespace Proyecto_MVC.Controllers
         {
             try
             {
-                var token = ObtenerToken();
+                //var token = ObtenerToken();
 
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
                 string data = JsonConvert.SerializeObject(animal);
@@ -163,9 +169,9 @@ namespace Proyecto_MVC.Controllers
         {
             try
             {
-                var token = ObtenerToken();
+                //var token = ObtenerToken();
 
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 HttpResponseMessage response = await _client.DeleteAsync(_client.BaseAddress + "Animales/" + id);
 

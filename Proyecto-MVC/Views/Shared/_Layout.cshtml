@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var isHomeIndex = string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), "Home", StringComparison.OrdinalIgnoreCase)
+                       && string.Equals(ViewContext.RouteData.Values["action"]?.ToString(), "Index", StringComparison.OrdinalIgnoreCase);
+
+
+    var isControllerIndex = string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), "Dashboard", StringComparison.OrdinalIgnoreCase)
+                           && string.Equals(ViewContext.RouteData.Values["action"]?.ToString(), "Index", StringComparison.OrdinalIgnoreCase);
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,15 +21,33 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Proyecto_MVC</a>
+            <div class="container-fluid  justify-content-between">
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex ">
+                    <a class="navbar-brand" asp-area="" asp-controller="Dashboard" asp-action="Index">Proyecto Animales</a>
+                    <ul class="navbar-nav flex-grow-1 justify-content-between">
+                        @if (!isHomeIndex)
+                        {
+                            <li>
+                                @if (!isControllerIndex)
+                                {
+                                    <a asp-action="Index" asp-controller="Dashboard" class="btn btn-success">Dashboard</a>
 
+                                }
+                                else
+                                {
+                                    <a asp-action="Index" asp-controller="Raza" class="btn btn-success">Razas</a>
+                                }
+                            </li>
+
+                            <li>
+                                 <a asp-action="Logoff" asp-controller="Home" class="btn btn-danger bi bi-box-arrow-left"></a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -33,7 +61,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - Proyecto_MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Proyecto Animales - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

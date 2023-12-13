@@ -1,5 +1,5 @@
-﻿using AGE.Utils.Paginacion;
-using AGE.Utils.WebLink;
+﻿using Proyecto_SASF.Utils.Paginacion;
+using Proyecto_SASF.Utils.WebLink;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_SASF.Entities.DAO.ZoologicoSecuenciasDAO;
@@ -11,7 +11,7 @@ namespace Proyecto_SASF.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ZoologicoSecuenciasController : ControllerBase
     {
         private readonly IZoologicoSecuenciasService _service;

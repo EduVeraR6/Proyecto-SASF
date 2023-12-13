@@ -1,15 +1,15 @@
-﻿using AGE.Middleware.Exceptions.BadRequest;
-using AGE.Middleware.Exceptions.Forbidden;
-using AGE.Middleware.Exceptions.NotFound;
-using AGE.Middleware.Exceptions.Unauthorized;
-using AGE.Middleware.Models;
+﻿using Proyecto_SASF.Middleware.Exceptions.BadRequest;
+using Proyecto_SASF.Middleware.Exceptions.Forbidden;
+using Proyecto_SASF.Middleware.Exceptions.NotFound;
+using Proyecto_SASF.Middleware.Exceptions.Unauthorized;
+using Proyecto_SASF.Middleware.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Net;
 using System.Text.Json;
-using NotImplementedException = AGE.Middleware.Exceptions.NotImplemented.NotImplementedException;
+using NotImplementedException = Proyecto_SASF.Middleware.Exceptions.NotImplemented.NotImplementedException;
 
-namespace AGE.Middleware
+namespace Proyecto_SASF.Middleware
 {
     public class ExceptionMiddleware
     {

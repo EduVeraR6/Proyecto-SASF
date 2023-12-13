@@ -1,4 +1,4 @@
-﻿using AGE.Middleware.Exceptions.BadRequest;
+﻿using Proyecto_SASF.Middleware.Exceptions.BadRequest;
 
 namespace Proyecto_SASF.Middleware.Exceptions.BadRequest
 {

@@ -1,9 +1,9 @@
 ﻿
-using AGE.Middleware.Exceptions.NotFound;
+using Proyecto_SASF.Middleware.Exceptions.NotFound;
 using Proyecto_SASF.Entities;
 using Proyecto_SASF.Services.ZoologicoSecuenciasService;
 
-namespace AGE.Utils
+namespace Proyecto_SASF.Utils
 {
     public class FuncionesSecuencias
     {

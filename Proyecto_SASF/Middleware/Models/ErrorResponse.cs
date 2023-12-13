@@ -1,7 +1,7 @@
 ﻿
  using System.Net;
 
-namespace AGE.Middleware.Models
+namespace Proyecto_SASF.Middleware.Models
 {
     internal class ErrorResponse
     {

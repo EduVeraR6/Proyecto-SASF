@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
 
-namespace AGE.Middleware.Exceptions.Forbidden
+namespace Proyecto_SASF.Middleware.Exceptions.Forbidden
 {
     public class ForbiddenException : Exception
     {

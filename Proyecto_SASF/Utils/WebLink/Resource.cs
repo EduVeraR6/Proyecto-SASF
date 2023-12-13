@@ -1,4 +1,4 @@
-﻿namespace AGE.Utils.WebLink
+﻿namespace Proyecto_SASF.Utils.WebLink
 {
     public class Resource<T>
     {

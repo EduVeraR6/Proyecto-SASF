@@ -1,4 +1,4 @@
-﻿namespace AGE.Middleware.Exceptions.Unauthorized
+﻿namespace Proyecto_SASF.Middleware.Exceptions.Unauthorized
 {
     public class NotAuthenticatedException : Exception
     {

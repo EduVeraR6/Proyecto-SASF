@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace AGE.Middleware.Exceptions.NotFound
+namespace Proyecto_SASF.Middleware.Exceptions.NotFound
 {
     public class RegisterNotFoundException : NotFoundException
     {

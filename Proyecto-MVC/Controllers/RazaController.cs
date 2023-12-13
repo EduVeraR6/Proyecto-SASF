@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Proyecto_MVC.Models;
 using Proyecto_MVC.Models.DAO;
+using Proyecto_MVC.Utils;
+using Proyecto_MVC.Utils.Paginacion;
 using System.Net.Http.Headers;
 using System.Text;
 using Zoo_MVC.Models;
@@ -29,38 +31,48 @@ namespace Proyecto_MVC.Controllers
             return accessToken;
         }
 
+        [HttpGet]
+        public async Task<int> ObtenerTotalRazas()
+        {
+            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Raza");
+            Page<RazaViewModel> razas = await Auxiliar.ExtraerPage<RazaViewModel>(response);
+
+            return razas.TotalElements;
+        }
+
+
+
+        [HttpGet]
+        public async Task<List<RazaViewModel>> ObtenerRazas(int page = 0, int pageSize = 10) {
+            //var token = ObtenerToken();
+
+            //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            HttpResponseMessage response = await _client.GetAsync($"{baseUrl}Raza?page={page}&size={pageSize}");
+            Page<RazaViewModel> razas = await Auxiliar.ExtraerPage<RazaViewModel>(response);
+
+
+            return razas.Content;
+        }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<RazaViewModel> razas = new List<RazaViewModel>();
-            var token = ObtenerToken();
-
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
-
-            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress +"Raza");
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = await response.Content.ReadAsStringAsync();
-                var responseObject = JsonConvert.DeserializeObject<JObject>(data);
-                var contentArray = responseObject["content"].ToString();
-                razas = JsonConvert.DeserializeObject<List<RazaViewModel>>(contentArray);
-            }
-
+            List<RazaViewModel> razas = await ObtenerRazas();
             ViewBag.Razas = razas;
 
             return View();
         }
 
         [HttpGet]
-        public async Task<JsonResult> ObtenerRaza(int id)
+        public async Task<RazaViewModel> ObtenerRaza(int id)
         {
-            try
-            {
-                AnimalViewModel animal = new AnimalViewModel();
-                var token = ObtenerToken();
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                RazaViewModel raza= new RazaViewModel();
+                //var token = ObtenerToken();
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "Raza/" + id);
 
@@ -68,36 +80,31 @@ namespace Proyecto_MVC.Controllers
                 {
 
                     string data = await response.Content.ReadAsStringAsync();
-                    animal = JsonConvert.DeserializeObject<AnimalViewModel>(data);
+                    raza = JsonConvert.DeserializeObject<RazaViewModel>(data);
 
-                    return Json(animal);
+                    return raza;
 
 
                 }
-            }
-            catch (Exception ex)
-            {
-                return Json("Error al obtener el animal", ex.Message);
-            }
 
-            return Json("Error al obtener el animal");
+            return raza;
         }
 
 
 
 
         [HttpPost]
-        public async Task<IActionResult> SaveRaza(RazaDAO raza)
+        public ActionResult SaveRaza(RazaDAO raza)
         {
             try
             {
-                var token = ObtenerToken();
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //var token = ObtenerToken();
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 string data = JsonConvert.SerializeObject(raza);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await _client.PostAsync(_client.BaseAddress + "Raza", content);
+                HttpResponseMessage response =  _client.PostAsync(_client.BaseAddress + "Raza", content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -117,14 +124,14 @@ namespace Proyecto_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditRaza(AnimalDAO animal)
+        public async Task<IActionResult> EditRaza(RazaDAO raza)
         {
             try
             {
-                var token = ObtenerToken();
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //var token = ObtenerToken();
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                string data = JsonConvert.SerializeObject(animal);
+                string data = JsonConvert.SerializeObject(raza);
                 StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await _client.PutAsync(_client.BaseAddress + "Raza", content);
 
@@ -149,8 +156,8 @@ namespace Proyecto_MVC.Controllers
         {
             try
             {
-                var token = ObtenerToken();
-                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                //var token = ObtenerToken();
+                //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 HttpResponseMessage response = await _client.DeleteAsync(_client.BaseAddress + "Raza/" + id);
 

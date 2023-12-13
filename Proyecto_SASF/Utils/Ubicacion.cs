@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace AGE.Utils
+namespace Proyecto_SASF.Utils
 {
     public class Ubicacion
     {

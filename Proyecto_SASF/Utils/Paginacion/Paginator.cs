@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace AGE.Utils.Paginacion
+namespace Proyecto_SASF.Utils.Paginacion
 {
     public class Paginator<TEntity, TDao>
     {

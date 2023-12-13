@@ -1,5 +1,5 @@
-﻿using AGE.Utils.Paginacion;
-using AGE.Utils.WebLink;
+﻿using Proyecto_SASF.Utils.Paginacion;
+using Proyecto_SASF.Utils.WebLink;
 using Proyecto_SASF.Entities.DAO.RazaDAO;
 
 namespace Proyecto_SASF.Services.RazasService

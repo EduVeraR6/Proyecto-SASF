@@ -4,26 +4,13 @@
     ViewData["Title"] = "Index";
 }
 
-<script src="~/js/jquery.min.js"></script>
-<script src="~/js/Razas.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-<div class="container text-center d-flex justify-content-between">
-    <div class="col-2">
-        <div class="row">
-            <a asp-action="Index" asp-controller="Dashboard" class="btn btn-outline-success">Animales</a>
-        </div>
-    </div>
-    <div class="col-2">
-        <div class="row">
-            <a asp-action="Logoff" asp-controller="Home" class="btn btn-danger">Cerrar Sesion</a>
-        </div>
-    </div>
-</div>
 
 <h1>Lista Razas</h1>
 
 <p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#razaModal">
+    <button onclick="LimpiarCampos()" type="button" class="btn btn-primary">
         Crear Raza
     </button>
 </p>
@@ -64,8 +51,8 @@
                 <div class="btn-group">
                     <button type="button" id="btnRegistrar" class="btn btn-primary mr-3">Guardar</button>
                     <button type="button" id="btnModificar" class="btn btn-primary mr-3" style="display:none">Guardar Cambios</button>
-                    <button type="button" id="btnEliminar" class="btn btn-primary mr-3" style="display:none">Eliminar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btnEliminarRegistro" class="btn btn-primary mr-3" style="display:none">Eliminar</button>
+                    <button type="button" onclick="Cerrar();" id="btnCerrarModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -75,7 +62,7 @@
 
 <div class="container container-sm container-md">
 
-    <table class="table  table-striped">
+    <table id="tbRaza" class="table  table-striped">
         <thead class="col-6">
             <tr>
                 <th>
@@ -91,46 +78,26 @@
                     Origen Geografico
                 </th>
                 <th>
+                    Estado
+                </th>
+                <th>
                     Acciones
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewBag.Razas)
-            {
-                <tr>
-                    <td>
-                        @item.Id
-                    </td>
-                    <td>
-                        @item.Nombre
-                    </td>
-                    <td>
-                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                            @item.Descripcion
-                        </span>
-
-                    </td>
-                    <td>
-                        @item.OrigenGeografico
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary " onclick="Edit(@item.Id)" id="btnEditar">
-                            Editar
-                        </button>
-                        <button type="button" class="btn btn-danger " onclick="Eliminar(@item.Id)" id="btnEliminar">
-                            Eliminar
-                        </button>
-                    </td>
-                </tr>
-            }
         </tbody>
     </table>
+
+    <div class="d-grid gap-2 pagination d-md-flex justify-content-md-end">
+        <button id="btnPrev" class="btn btn-link btn-lg bi bi-arrow-left"></button>
+        <button id="btnNext" class="btn btn-link btn-lg bi bi-arrow-right"> </button>
+    </div>
 
 
 </div>
 
-
+<script src="~/Scripts/Razas.js"></script>
 
 
 

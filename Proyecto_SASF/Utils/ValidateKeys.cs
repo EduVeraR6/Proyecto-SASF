@@ -1,6 +1,6 @@
-﻿using AGE.Middleware.Exceptions.BadRequest;
+﻿using Proyecto_SASF.Middleware.Exceptions.BadRequest;
 
-namespace AGE.Utils
+namespace Proyecto_SASF.Utils
 {
     public class ValidateKeys
     {

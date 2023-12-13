@@ -1,4 +1,4 @@
-﻿namespace AGE.Utils.Paginacion
+﻿namespace Proyecto_SASF.Utils.Paginacion
 {
     public class Page<TDao>
     {

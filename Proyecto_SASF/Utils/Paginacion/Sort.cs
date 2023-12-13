@@ -1,7 +1,7 @@
-﻿using AGE.Middleware.Exceptions.BadRequest;
+﻿using Proyecto_SASF.Middleware.Exceptions.BadRequest;
 using System.Reflection;
 
-namespace AGE.Utils.Paginacion
+namespace Proyecto_SASF.Utils.Paginacion
 {
     public class Sort<TDao>
     {

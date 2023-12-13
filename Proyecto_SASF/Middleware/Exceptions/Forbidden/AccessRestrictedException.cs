@@ -1,4 +1,4 @@
-﻿namespace AGE.Middleware.Exceptions.Forbidden
+﻿namespace Proyecto_SASF.Middleware.Exceptions.Forbidden
 {
     public class AccessRestrictedException : ForbiddenException
     {

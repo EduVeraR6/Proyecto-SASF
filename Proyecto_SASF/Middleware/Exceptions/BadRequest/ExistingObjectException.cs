@@ -1,4 +1,4 @@
-﻿namespace AGE.Middleware.Exceptions.BadRequest
+﻿namespace Proyecto_SASF.Middleware.Exceptions.BadRequest
 {
     public class ExistingObjectException : BadRequestException
     {

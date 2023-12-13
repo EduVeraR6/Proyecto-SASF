@@ -1,4 +1,4 @@
-﻿namespace AGE.Utils
+﻿namespace Proyecto_SASF.Utils
 {
     public class Globales
     {

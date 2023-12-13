@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace AGE.Middleware.Exceptions.BadRequest
+namespace Proyecto_SASF.Middleware.Exceptions.BadRequest
 {
     public class BadRequestException : Exception
     {

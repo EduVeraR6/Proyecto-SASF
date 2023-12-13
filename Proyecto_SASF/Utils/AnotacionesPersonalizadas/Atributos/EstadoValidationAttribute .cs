@@ -1,4 +1,4 @@
-﻿using AGE.Utils;
+﻿using Proyecto_SASF.Utils;
 using System.ComponentModel.DataAnnotations;
 
 namespace Proyecto_SASF.Utils.AnotacionesPersonalizadas.Atributos

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Net;
 
-namespace AGE.Middleware.Exceptions.NotImplemented
+namespace Proyecto_SASF.Middleware.Exceptions.NotImplemented
 {
     public class NotImplementedException : Exception
     {

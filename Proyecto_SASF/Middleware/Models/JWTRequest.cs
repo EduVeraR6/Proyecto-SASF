@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AGE.Middleware.Models
+namespace Proyecto_SASF.Middleware.Models
 {
     public class JWTRequest
     {
