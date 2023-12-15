@@ -175,6 +175,16 @@ namespace Proyecto_MVC.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<List<RazaViewModel>> RazaFiltro(string filtro, int page = 0, int pageSize = 30)
+        {
+            HttpResponseMessage response = await _client.GetAsync($"{_client.BaseAddress}Raza/filtro?filtro={filtro}&page={page}&size={pageSize}");
+            Page<RazaViewModel> razas= await Auxiliar.ExtraerPage<RazaViewModel>(response);
+
+
+            return razas.Content;
+        }
+
 
     }
 }

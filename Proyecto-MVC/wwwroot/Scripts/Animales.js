@@ -2,6 +2,8 @@
 const pageSize = 10;
 let totalElements = 0;
 
+
+
 //Obteniendo el total de registros
 function getTotalElements() {
     return fetch('/Dashboard/ObtenerTotalAnimales', {
@@ -25,6 +27,8 @@ function getTotalElements() {
 }
 
 
+
+
 //Obteniendo de 10 en 10 los registros
 function fetchData(page) {
     return fetch(`/Dashboard/ObtenerAnimales?page=${page}&pageSize=${pageSize}`, {
@@ -41,6 +45,91 @@ function fetchData(page) {
             throw error;
         });
 }
+
+//Busqueda Animal
+
+function fetchDataBusqueda(filtro , page) {
+    return fetch(`/Dashboard/AnimalesFiltro?filtro=${filtro}&page=${page}&pageSize=${pageSize}`, {
+        method:'GET'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Respuesta no exitosa');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('Erro al obtener la lista de busqueda');
+            throw error;
+        })
+}
+
+//Actualizando la tabla busqueda
+function updatePageDataUpdate(filtro, page) {
+        fetchDataBusqueda(filtro, page)
+            .then(data => {
+                if (data && Array.isArray(data)) {
+                    console.log(data);
+                    const tb = document.querySelector('#tbAnimal tbody');
+                    tb.innerHTML = '';
+
+                    for (let i = 0; i < data.length; i++) {
+                        const row = document.createElement('tr');
+
+                        row.innerHTML = `
+                    <td>${data[i].id}</td>
+                    <td>${data[i].nombre}</td>
+                    <td>${data[i].edad}</td>
+                    <td>${data[i].especie}</td>
+                    <td>${data[i].estado}</td>
+                    <td>${data[i].raza.nombre}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btnEditar" data-id="${data[i].id}">Editar</button>
+                        <button type="button" class="btn btn-danger btnEliminar" data-id="${data[i].id}">Eliminar</button>
+                    </td>
+                `;
+                        tb.appendChild(row);
+                    }
+
+                    const btnNext = document.getElementById('btnNext');
+                    const btnPrev = document.getElementById('btnPrev');
+
+                    btnNext.disabled = true;
+                    btnPrev.disabled = true;
+
+
+
+                    // Asignar eventos a los botones después de agregar las filas
+                    const btnEditores = document.querySelectorAll('.btnEditar');
+                    const btnEliminadores = document.querySelectorAll('.btnEliminar');
+
+                    btnEditores.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const animalId = btn.getAttribute('data-id');
+                            console.log(animalId);
+                            Edit(animalId);
+                        });
+                    });
+
+                    btnEliminadores.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const animalId = btn.getAttribute('data-id');
+                            console.log(animalId);
+                            Eliminar(animalId);
+                        });
+                    });
+
+                } else {
+                    console.error('La respuesta no contiene datos válidos.');
+                }
+                currentPage = page;
+
+            })
+            .catch(error => console.error('Error al cargar la lista de animales:', error));
+    
+}
+
+
 
 //Actualizando la tabla
 function updatePageData(page) {
@@ -107,6 +196,8 @@ function updatePaginationButtons() {
     btnNext.disabled = currentPage * pageSize + pageSize >= totalElements;
     btnPrev.disabled = currentPage === 0;
 }
+
+
 
 //Ayuda a cargar la tabla despues de insertar y actualizar datos
 function cargarListaAnimales() {
@@ -279,6 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updatePageData(currentPage);
     })
 
+
     // Eventos del anterior y siguiente 
     const btnNext = document.getElementById('btnNext');
     const btnPrev = document.getElementById('btnPrev');
@@ -298,6 +390,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Demas elementos
+
+    document.getElementById("Search").addEventListener("click", () => {
+
+
+        console.log("Entrando a busqueda");
+        var inputBusqueda = document.getElementById("input-Busqueda").value;
+
+        if (!inputBusqueda == "") {
+            updatePageDataUpdate(inputBusqueda, currentPage);
+        } else {
+            alert("Input de busqueda vacio")
+            cargarListaAnimales();
+        }
+
+    })
+
 
 
     document.getElementById("btnModificar").addEventListener("click", function () {

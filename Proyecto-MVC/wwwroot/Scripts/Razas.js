@@ -42,6 +42,83 @@ function fetchData(page) {
         });
 }
 
+
+//Busqueda Animal
+
+function fetchDataBusqueda(filtro, page) {
+    return fetch(`/Raza/RazaFiltro?filtro=${filtro}&page=${page}&pageSize=${pageSize}`, {
+        method: 'GET'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Respuesta no exitosa');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            console.error('Erro al obtener la lista de busqueda');
+            throw error;
+        })
+}
+
+//Actualizando la tabla Filtro
+function updatePageDataUpdate(filtro,page) {
+    fetchDataBusqueda(filtro,page)
+        .then(data => {
+            if (data && Array.isArray(data)) {
+                console.log(data);
+                const tb = document.querySelector('#tbRaza tbody');
+                tb.innerHTML = '';
+
+                for (let i = 0; i < data.length; i++) {
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                    <td>${data[i].id}</td>
+                    <td>${data[i].nombre}</td>
+                    <td>
+                        <span class="d-inline-block text-truncate" style="max-width: 150px;">
+                          ${data[i].descripcion}
+                        </span>
+                    </td>
+                    <td>${data[i].origenGeografico}</td>
+                    <td>${data[i].estado}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btnEditar" data-id="${data[i].id}">Editar</button>
+                        <button type="button" class="btn btn-danger btnEliminar" data-id="${data[i].id}">Eliminar</button>
+                    </td>
+                `;
+                    tb.appendChild(row);
+                }
+
+                // Asignar eventos a los botones después de agregar las filas
+                const btnEditores = document.querySelectorAll('.btnEditar');
+                const btnEliminadores = document.querySelectorAll('.btnEliminar');
+
+                btnEditores.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const razaId = btn.getAttribute('data-id');
+                        console.log(razaId);
+                        Edit(razaId);
+                    });
+                });
+
+                btnEliminadores.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const razaId = btn.getAttribute('data-id');
+                        console.log(razaId);
+                        Eliminar(razaId);
+                    });
+                });
+
+            } else {
+                console.error('La respuesta no contiene datos válidos.');
+            }
+            currentPage = page;
+
+        })
+        .catch(error => console.error('Error al cargar la lista de razas:', error));
+}
 //Actualizando la tabla
 function updatePageData(page) {
     fetchData(page)
@@ -71,6 +148,14 @@ function updatePageData(page) {
                 `;
                     tb.appendChild(row);
                 }
+
+                const btnNext = document.getElementById('btnNext');
+                const btnPrev = document.getElementById('btnPrev');
+
+
+                btnNext.disabled = true;
+                btnPrev.disabled = true;
+
 
                 // Asignar eventos a los botones después de agregar las filas
                 const btnEditores = document.querySelectorAll('.btnEditar');
@@ -240,17 +325,17 @@ function ValidarCampos() {
     var descripcion = document.getElementById("Descripcion").values;
     var origen = document.getElementById("OrigenGeografico")
 
-    if (nombre.trim() === "" || !isNaN(nombre)) {
+    if (nombre == "" || !isNaN(nombre)) {
         alert("Nombre de la raza Invalida");
         return false;
     }
 
-    if (descripcion.trim() === "" || !isNaN(descripcion)) {
+    if (descripcion == "" || !isNaN(descripcion)) {
         alert("Descripcion de la raza Invalida");
         return false;
     }
 
-    if (origen.trim() === "" || !isNaN(origen)) {
+    if (origen == "" || !isNaN(origen)) {
         alert(" Origen de la raza Invalida");
         return false;
     }
@@ -286,6 +371,22 @@ document.addEventListener("DOMContentLoaded", function () {
             updatePageData(anteriorPagina);
         }
     });
+
+    document.getElementById("Search").addEventListener("click", () => {
+
+
+        console.log("Entrando a busqueda");
+        var inputBusqueda = document.getElementById("input-Busqueda").value;
+
+        if (!inputBusqueda == "") {
+            updatePageDataUpdate(inputBusqueda, currentPage);
+        } else {
+            alert("Input de busqueda vacio")
+            cargarListaRazas();
+        }
+
+    })
+
 
     //Demas elementos
     document.getElementById("btnRegistrar").addEventListener("click", function () {

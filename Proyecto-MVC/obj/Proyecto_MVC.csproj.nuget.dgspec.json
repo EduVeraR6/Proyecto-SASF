@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Practicas Angular\\.NET-Capacitacion\\PROYECTO-DOCS\\Proyecto_SASF\\Proyecto-MVC\\Proyecto_MVC.csproj": {}
+    "C:\\Users\\vedison\\Desktop\\Proyecto\\Proyecto-SASF\\Proyecto-MVC\\Proyecto_MVC.csproj": {}
   },
   "projects": {
-    "D:\\Practicas Angular\\.NET-Capacitacion\\PROYECTO-DOCS\\Proyecto_SASF\\Proyecto-MVC\\Proyecto_MVC.csproj": {
+    "C:\\Users\\vedison\\Desktop\\Proyecto\\Proyecto-SASF\\Proyecto-MVC\\Proyecto_MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Practicas Angular\\.NET-Capacitacion\\PROYECTO-DOCS\\Proyecto_SASF\\Proyecto-MVC\\Proyecto_MVC.csproj",
+        "projectUniqueName": "C:\\Users\\vedison\\Desktop\\Proyecto\\Proyecto-SASF\\Proyecto-MVC\\Proyecto_MVC.csproj",
         "projectName": "Proyecto_MVC",
-        "projectPath": "D:\\Practicas Angular\\.NET-Capacitacion\\PROYECTO-DOCS\\Proyecto_SASF\\Proyecto-MVC\\Proyecto_MVC.csproj",
-        "packagesPath": "C:\\Users\\Pc\\.nuget\\packages\\",
-        "outputPath": "D:\\Practicas Angular\\.NET-Capacitacion\\PROYECTO-DOCS\\Proyecto_SASF\\Proyecto-MVC\\obj\\",
+        "projectPath": "C:\\Users\\vedison\\Desktop\\Proyecto\\Proyecto-SASF\\Proyecto-MVC\\Proyecto_MVC.csproj",
+        "packagesPath": "C:\\Users\\vedison\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\vedison\\Desktop\\Proyecto\\Proyecto-SASF\\Proyecto-MVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "D:\\.componentes\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\vedison\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -63,7 +63,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -75,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.320\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

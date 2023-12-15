@@ -5,6 +5,7 @@ using Proyecto_MVC.Models;
 using Proyecto_MVC.Models.DAO;
 using Proyecto_MVC.Utils;
 using Proyecto_MVC.Utils.Paginacion;
+using System.Drawing.Printing;
 using System.Net.Http.Headers;
 using System.Text;
 using Zoo_MVC.Models;
@@ -61,6 +62,8 @@ namespace Proyecto_MVC.Controllers
 
             return razas.Content;
         }
+
+
 
         [HttpGet]
         public async Task<List<AnimalViewModel>> ObtenerAnimales(int page = 0, int pageSize = 10) {
@@ -189,7 +192,20 @@ namespace Proyecto_MVC.Controllers
 
             return Json("No se logro eliminar el animal");
         }
-       
+
+        [HttpGet]
+        public async Task<List<AnimalViewModel>> AnimalesFiltro(string filtro , int page=0 , int pageSize = 30 )
+        {
+            HttpResponseMessage response = await _client.GetAsync($"{_client.BaseAddress}Animales/filtro?filtro={filtro}&page={page}&size={pageSize}");
+            Page<AnimalViewModel> animales = await Auxiliar.ExtraerPage<AnimalViewModel>(response);
+
+
+            return animales.Content;
+        }
+
+
+
+
 
     }
 }

@@ -25,7 +25,7 @@ public partial class ZoologicoContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=localhost; Database = zoologico; Integrated Security = True; TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=DESK-SASF-055\\SQLEXPRESS; Database = zoologico; Integrated Security = True; TrustServerCertificate=True;");
         }
     }
 
